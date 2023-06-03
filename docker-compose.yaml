@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  api-solid-pg:
-    image: postgresql
+  desenv-web-pg:
+    image: bitnami/postgresql
     ports:
       - 5432:5432
     environment:
