@@ -25,8 +25,8 @@ export class RegisterService {
     name,
     email,
     password,
-    crmCoren,
     role,
+    crmCoren,
   }: RegisterServiceRequest): Promise<RegisterServiceResponse> {
     const password_hash = await hash(password, 6)
 
