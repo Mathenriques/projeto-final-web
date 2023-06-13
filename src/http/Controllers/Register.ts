@@ -29,12 +29,13 @@ export async function Register(request: FastifyRequest, reply: FastifyReply) {
       crmCoren,
     })
   } catch (err) {
+    console.log(err)
     if (
       err instanceof EmailUserAlreadyExistsError ||
       err instanceof CrmCorenFormatInvalidError ||
       err instanceof CrmCorenUserAlreadyExistsError
     ) {
-      return reply.status(409).send({ message: err.name })
+      return reply.status(409).send({ message: err.message })
     }
     throw err
   }

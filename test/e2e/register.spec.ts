@@ -17,7 +17,7 @@ describe('Register (e2e)', () => {
       email: 'math.marqui@gmail.com',
       password: '12345678',
       role: 'MEDICO_UTI',
-      crmCoren: 'CRM/SP 12345',
+      crmCoren: 'CRM/SP 123456',
     })
 
     expect(response.statusCode).toEqual(201)
