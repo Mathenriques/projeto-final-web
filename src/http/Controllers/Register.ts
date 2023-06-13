@@ -34,7 +34,7 @@ export async function Register(request: FastifyRequest, reply: FastifyReply) {
       err instanceof CrmCorenFormatInvalidError ||
       err instanceof CrmCorenUserAlreadyExistsError
     ) {
-      return reply.status(409).send({ message: err.message })
+      return reply.status(409).send({ message: err.name })
     }
     throw err
   }
