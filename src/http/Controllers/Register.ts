@@ -29,7 +29,6 @@ export async function Register(request: FastifyRequest, reply: FastifyReply) {
       crmCoren,
     })
   } catch (err) {
-    console.log(err)
     if (
       err instanceof EmailUserAlreadyExistsError ||
       err instanceof CrmCorenFormatInvalidError ||
