@@ -3,20 +3,10 @@ import { Prisma, User } from '@prisma/client'
 import { UsersRepository } from '../users-repository'
 
 export class PrismaUsersRepository implements UsersRepository {
-  async findByCrmCorem(crmCorem: string): Promise<User | null> {
+  async findByRegister(register: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
       where: {
-        crm_coren: crmCorem,
-      },
-    })
-
-    return user
-  }
-
-  async findByEmail(email: string) {
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
+        register,
       },
     })
 

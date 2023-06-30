@@ -81,7 +81,7 @@ model Patient_Infos {
   @@map("patient_infos")
 }
 
-model UTI_Bed {
+model Uti_Bed {
   id String @id @default(uuid())
   type String
   status StatusUtiBed

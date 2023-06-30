@@ -5,18 +5,8 @@ import { randomUUID } from 'crypto'
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = []
 
-  async findByCrmCorem(crmCoren: string) {
-    const user = this.items.find((item) => item.crm_coren === crmCoren)
-
-    if (!user) {
-      return null
-    }
-
-    return user
-  }
-
-  async findByEmail(email: string) {
-    const user = this.items.find((item) => item.email === email)
+  async findByRegister(register: string) {
+    const user = this.items.find((item) => item.register === register)
 
     if (!user) {
       return null
@@ -29,11 +19,7 @@ export class InMemoryUsersRepository implements UsersRepository {
     const user = {
       id: randomUUID(),
       name: data.name,
-      email: data.email,
-      password_hash: data.password_hash,
-      crm_coren: data.crm_coren,
-      role: data.role,
-      approved: false,
+      register: data.register,
       created_at: new Date(),
     }
 
