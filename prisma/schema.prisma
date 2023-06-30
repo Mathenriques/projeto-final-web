@@ -11,20 +11,104 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  name          String
-  email         String   @unique
-  password_hash String
-  crm_coren     String   @unique
-  role          Role
-  approved      Boolean  @default(false)
-  created_at    DateTime @default(now())
+  id           String        @id @default(uuid())
+  name         String
+  register     String        @unique
+  created_at   DateTime      @default(now())
+  
+  patitent     Patient?
+  collaborator Collaborator?
 
   @@map("users")
+}
+
+model Patient {
+  id         String @id @default(uuid())
+  birth_date String
+  gender     Gender
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String @unique
+
+  patient_infos Patient_Infos[]
+
+  @@map("patients")
+}
+
+model Collaborator {
+  id               String  @id @default(uuid())
+  medical_register String  @unique
+  function         Role
+  email            String  @unique
+  password_hash    String
+  approved         Boolean @default(false)
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String @unique
+
+  solicitations Solicitation[]
+
+  @@map("collaborators")
+}
+
+model Solicitation {
+  id         String   @id @default(uuid())
+  priority   Int
+  status     Boolean  @default(false)
+  created_at DateTime @default(now())
+
+  collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
+  collaborator_id String
+
+  patient_infos Patient_Infos?
+
+  @@map("solicitations")
+}
+
+model Patient_Infos {
+  id                        String     @id @default(uuid())
+  main_deseases             String[]
+  precaution                Precaution
+  antecedents_comorbidities String[]
+  suport_needed             String[]
+
+  patient Patient @relation(fields: [patient_id], references: [id])
+  patient_id String
+
+  solicitation Solicitation @relation(fields: [solicitation_id], references: [id])
+  solicitation_id String @unique
+
+  @@map("patient_infos")
+}
+
+model UTI_Bed {
+  id String @id @default(uuid())
+  type String
+  status StatusUtiBed
+
+  @@map("uti_beds")
 }
 
 enum Role {
   MEDICO_UTI
   MEDICO_GERAL
   ENFERMEIRO
+}
+
+enum Gender {
+  Masculino
+  Feminino
+}
+
+enum Precaution {
+  Padrao
+  Contato
+  Respiratorio_Goticula
+  Respiratory_Aerossol
+}
+
+enum StatusUtiBed {
+  Livre
+  Limpeza
+  Ocupado
 }
