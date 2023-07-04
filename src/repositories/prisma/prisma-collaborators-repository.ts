@@ -3,6 +3,14 @@ import { CollaboratorsRepository } from '../collaborators-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaCollaboratorsRepository implements CollaboratorsRepository {
+  async findById(id: string): Promise<Collaborator | null> {
+    const collab = await prisma.collaborator.findUnique({
+      where: { id },
+    })
+
+    return collab
+  }
+
   async findByEmail(email: string): Promise<Collaborator | null> {
     const collab = await prisma.collaborator.findUnique({ where: { email } })
 

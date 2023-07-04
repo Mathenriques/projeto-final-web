@@ -5,6 +5,16 @@ import { randomUUID } from 'crypto'
 export class InMemoryCollaboratorsRepository
   implements CollaboratorsRepository
 {
+  async findById(id: string): Promise<Collaborator | null> {
+    const collab = this.items.find((item) => item.id === id)
+
+    if (!collab) {
+      return null
+    }
+
+    return collab
+  }
+
   public items: Collaborator[] = []
 
   async findByEmail(email: string) {
