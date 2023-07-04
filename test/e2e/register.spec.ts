@@ -11,14 +11,17 @@ describe('Register (e2e)', () => {
     await app.close()
   })
 
-  it.skip('Should be able to register', async () => {
-    const response = await request(app.server).post('/register').send({
-      name: 'Matheus Henriques',
-      email: 'math.marqui@gmail.com',
-      password: '12345678',
-      role: 'MEDICO_UTI',
-      crmCoren: 'CRM/SP 123456',
-    })
+  it('Should be able to register', async () => {
+    const response = await request(app.server)
+      .post('/register-collaborator')
+      .send({
+        name: 'Matheus Henriques',
+        register: '12345678900',
+        medical_register: 'CRM/SP 123456',
+        role: 'MEDICO_UTI',
+        email: 'math.marqui@gmail.com',
+        password: '12345678',
+      })
 
     expect(response.statusCode).toEqual(201)
   })
