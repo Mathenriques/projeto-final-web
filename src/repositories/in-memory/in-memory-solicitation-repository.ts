@@ -7,6 +7,16 @@ export class InMemorySolicitationsRepository
 {
   public items: Solicitation[] = []
 
+  async findById(id: string): Promise<Solicitation | null> {
+    const solicitation = this.items.find((item) => item.id === id)
+
+    if (!solicitation) {
+      return null
+    }
+
+    return solicitation
+  }
+
   async create(
     data: Prisma.SolicitationUncheckedCreateInput,
   ): Promise<Solicitation> {
