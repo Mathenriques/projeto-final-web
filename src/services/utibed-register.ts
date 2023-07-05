@@ -4,6 +4,8 @@ import { UtiBedAlreadyExists } from "./Errors/utibed-already-exists"
 
 interface UtiBedRegisterServiceRequest {
     id: string
+    type: string
+    status: string
 }
 
 interface UtiBedRegisterServiceResponse {
@@ -16,6 +18,8 @@ export class UtiBedRegisterService {
 
     async execute({
         id,
+        type,
+        status,
     }: UtiBedRegisterServiceRequest):
     Promise<UtiBedRegisterServiceResponse> {
         const UtiBedExist = await this.utiBedsRepository.findByID(id)
@@ -26,8 +30,8 @@ export class UtiBedRegisterService {
 
         const uti_bed = await this.utiBedsRepository.create({
             id,
-            type: "",
-            status: "Livre"
+            type,
+            status: "Livre",
         })
 
         return {
