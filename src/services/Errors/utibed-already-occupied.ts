@@ -1,5 +1,5 @@
-export class UtiBedAlreadyOccupied extends Error {
+export class UtiBedAlreadyExists extends Error {
     constructor() {
-        super('Uti Bed already occupied.')
+        super('Uti Bed already exists.')
     }
 }
