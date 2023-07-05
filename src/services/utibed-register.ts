@@ -1,6 +1,6 @@
 import { UtiBedsRepository } from "@/repositories/utibeds-repository"
 import { UTI_Bed } from "@prisma/client"
-import { UtiBedAlreadyExists } from "./Errors/utibed-already-occupied"
+import { UtiBedAlreadyExists } from "./Errors/utibed-already-exists"
 
 interface UtiBedRegisterServiceRequest {
     id: string
