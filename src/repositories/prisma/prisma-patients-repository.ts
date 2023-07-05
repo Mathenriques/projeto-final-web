@@ -3,6 +3,16 @@ import { PatientsRepository } from '../patients-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaPatientsRepository implements PatientsRepository {
+  async findById(id: string): Promise<Patient | null> {
+    const patient = await prisma.patient.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return patient
+  }
+
   async findByUserId(user_id: string): Promise<Patient | null> {
     const patient = await prisma.patient.findUnique({
       where: {
