@@ -38,7 +38,16 @@ export class PrismaCollaboratorsRepository implements CollaboratorsRepository {
     })
   }
 
-  
+  async alterFunction (collabId: string, newRole: 'ENFERMEIRO') {
+    const collab = await prisma.collaborator.update({
+      where: {
+        id: collabId,
+      },
+      data: {
+        function: newRole,  // Pode assumir: 'ENFERMEIRO', 'MEDICO_UTI' e 'MEDICO_GERAL'
+      },
+    })
+  }  
 
   async create(
     data: Prisma.CollaboratorUncheckedCreateInput,
