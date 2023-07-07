@@ -13,6 +13,17 @@ export class PrismaUTIBedsRepository implements UtiBedsRepository {
     return uti_bed
   }
 
+  async alterStatus (utibedId: string, newStatus: 'Livre') {
+    const uti_bed = await prisma.UTI_Bed.update ({
+      where: {
+        id: utibedId,
+      },
+      data: {
+        status: newStatus,  // Pode assumir: 'Livre', 'Limpeza' ou 'Ocupado'
+      }
+    })
+  }
+
   async create(data: Prisma.UTI_BedCreateInput) {
     const uti_bed = await prisma.UTI_Bed.create({
       data,
