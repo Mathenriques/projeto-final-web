@@ -14,31 +14,19 @@ export class PrismaSolicitationsRepository implements SolicitationsRepository {
   }
 
   async createUtiBedRequisition(patientInfos: Patient_Infos, collabId: string) {
-    try {
-      const solicitation = await prisma.solicitation.create({
-        data: {
-          patient_infos: patientInfos,
-          collaborator_id: collabId,
-        },
-      })
-      // Solicitação aprovada
-    } catch (error) {
-      // Solicitação negada
-    }
+    const solicitation = await prisma.solicitation.create({
+      data: { // ERRO -> ao inserir os dados da tabela patient_infos, provavelmente na tipagem
+        patient_infos: patientInfos,
+        collaborator_id: collabId,
+      },
+    })
   }
 
   async validateUtiBedsSolicitation (solicitationId: string) {
-    try {
-      const solicitation = await prisma.solicitation.update({
-        where: { id: solicitationId },
-        data: { status: true },
-      })
-      // Solicitação aprovada
-    } catch (error) {
-      // Solicitação negada
-    } finally {
-      await prisma.$disconnect();
-  }
+    const solicitation = await prisma.solicitation.update({
+      where: { id: solicitationId },
+      data: { status: true },
+    })
   }
 
   async create(
