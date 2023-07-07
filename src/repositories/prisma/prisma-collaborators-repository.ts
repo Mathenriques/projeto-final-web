@@ -27,6 +27,19 @@ export class PrismaCollaboratorsRepository implements CollaboratorsRepository {
     return collab
   }
 
+  async alterPassword(collabId: string, newPassword: string) {
+    const collab = await prisma.collaborator.update({
+      where: {
+        id: collabId, 
+      },
+      data: {
+        password_hash: newPassword,
+      },
+    })
+  }
+
+  
+
   async create(
     data: Prisma.CollaboratorUncheckedCreateInput,
   ): Promise<Collaborator> {
