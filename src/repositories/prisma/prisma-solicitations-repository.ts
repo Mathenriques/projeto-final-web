@@ -1,4 +1,4 @@
-import { Prisma, Solicitation } from '@prisma/client'
+import { Patient_Infos, Prisma, Solicitation } from '@prisma/client'
 import { SolicitationsRepository } from '../solicitations-repository'
 import { prisma } from '@/lib/prisma'
 
@@ -11,6 +11,34 @@ export class PrismaSolicitationsRepository implements SolicitationsRepository {
     })
 
     return solicitation
+  }
+
+  async createUtiBedRequisition(patientInfos: Patient_Infos, collabId: string) {
+    try {
+      const solicitation = await prisma.solicitation.create({
+        data: {
+          patient_infos: patientInfos,
+          collaborator_id: collabId,
+        },
+      })
+      // Solicitação aprovada
+    } catch (error) {
+      // Solicitação negada
+    }
+  }
+
+  async validateUtiBedsSolicitation (solicitationId: string) {
+    try {
+      const solicitation = await prisma.solicitation.update({
+        where: { id: solicitationId },
+        data: { status: true },
+      })
+      // Solicitação aprovada
+    } catch (error) {
+      // Solicitação negada
+    } finally {
+      await prisma.$disconnect();
+  }
   }
 
   async create(
