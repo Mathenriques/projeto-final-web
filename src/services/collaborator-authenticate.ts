@@ -1,12 +1,14 @@
-import { prisma } from '@/lib/prisma'
 import { CollaboratorsRepository } from '@/repositories/collaborators-repository'
-import { Collaborator } from '@prisma/client'
+import { Collaborator, Role } from '@prisma/client'
 import { CollaboratorDoesNotExists } from './Errors/collaborator-does-not-exists-error'
 import { compare } from 'bcryptjs'
+import { validateCrmCorenFormat } from './utils/validate-crmCoren-format'
+import { CrmCorenFormatInvalidError } from './Errors/crm-coren-format-invalid-error'
 
 interface CollaboratorAuthenticateRegisterRequest {
-  email: string
+  medical_register: string
   password: string
+  role: Role
 }
 
 interface CollaboratorAuthenticateRegisterResponse {
@@ -17,10 +19,21 @@ export class CollaboratorAuthenticateService {
   constructor(private collaboratorRepository: CollaboratorsRepository) {}
 
   async execute({
-    email,
+    medical_register,
     password,
+    role,
   }: CollaboratorAuthenticateRegisterRequest): Promise<CollaboratorAuthenticateRegisterResponse> {
-    const collaborator = await this.collaboratorRepository.findByEmail(email)
+    const medicalRegisterIsValid = validateCrmCorenFormat(
+      medical_register,
+      role,
+    )
+
+    if (!medicalRegisterIsValid) {
+      throw new CrmCorenFormatInvalidError()
+    }
+
+    const collaborator =
+      await this.collaboratorRepository.findByMedicalRegister(medical_register)
 
     if (!collaborator) {
       throw new CollaboratorDoesNotExists()
