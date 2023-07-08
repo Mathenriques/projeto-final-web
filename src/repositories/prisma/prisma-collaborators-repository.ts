@@ -1,8 +1,30 @@
 import { Collaborator, Prisma } from '@prisma/client'
-import { CollaboratorsRepository } from '../collaborators-repository'
+import {
+  CollaboratorsFieldsToApprove,
+  CollaboratorsRepository,
+} from '../collaborators-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaCollaboratorsRepository implements CollaboratorsRepository {
+  async findAllToApprove(
+    page: number,
+  ): Promise<CollaboratorsFieldsToApprove[]> {
+    const collabsToApprove = await prisma.collaborator.findMany({
+      where: {
+        approved: false,
+      },
+      select: {
+        medical_register: true,
+        function: true,
+        email: true,
+      },
+      take: 30,
+      skip: (page - 1) * 20,
+    })
+
+    return collabsToApprove
+  }
+
   async findById(id: string): Promise<Collaborator | null> {
     const collab = await prisma.collaborator.findUnique({
       where: { id },

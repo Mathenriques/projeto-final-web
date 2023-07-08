@@ -1,10 +1,28 @@
 import { Prisma, Collaborator } from '@prisma/client'
-import { CollaboratorsRepository } from '../collaborators-repository'
+import {
+  CollaboratorsFieldsToApprove,
+  CollaboratorsRepository,
+} from '../collaborators-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryCollaboratorsRepository
   implements CollaboratorsRepository
 {
+  public items: Collaborator[] = []
+
+  async findAllToApprove(
+    page: number,
+  ): Promise<CollaboratorsFieldsToApprove[]> {
+    return this.items
+      .filter((item) => !item.approved)
+      .map(({ medical_register, role: function, email }) => ({
+        medical_register,
+        role,
+        email
+      }))
+      .slice((page - 1) * 30, page * 30)
+  }
+
   async findById(id: string): Promise<Collaborator | null> {
     const collab = this.items.find((item) => item.id === id)
 
@@ -14,8 +32,6 @@ export class InMemoryCollaboratorsRepository
 
     return collab
   }
-
-  public items: Collaborator[] = []
 
   async findByEmail(email: string) {
     const collab = this.items.find((item) => item.email === email)
