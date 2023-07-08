@@ -13,6 +13,12 @@ export class PrismaUsersRepository implements UsersRepository {
     return user
   }
 
+  async listUsers() {
+    const userList = await prisma.user.findMany()
+
+    return userList
+  }
+
   async create(data: Prisma.UserCreateInput) {
     const user = await prisma.user.create({
       data,

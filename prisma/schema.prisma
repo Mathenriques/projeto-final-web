@@ -16,7 +16,7 @@ model User {
   register     String        @unique
   created_at   DateTime      @default(now())
   
-  patitent     Patient?
+  patient     Patient?
   collaborator Collaborator?
 
   @@map("users")
