@@ -1,11 +1,9 @@
 import { UtiBedsRepository } from '@/repositories/utibeds-repository'
-import { Uti_Bed } from '@prisma/client'
-import { UtiBedAlreadyExistsError } from './Errors/utibed-already-exists'
+import { StatusUtiBed, Uti_Bed } from '@prisma/client'
 
 interface UtiBedRegisterServiceRequest {
-  id: string
   type: string
-  status: string
+  status: StatusUtiBed
 }
 
 interface UtiBedRegisterServiceResponse {
@@ -16,20 +14,12 @@ export class UtiBedRegisterService {
   constructor(private utiBedsRepository: UtiBedsRepository) {}
 
   async execute({
-    id,
     type,
     status,
   }: UtiBedRegisterServiceRequest): Promise<UtiBedRegisterServiceResponse> {
-    const UtiBedExist = await this.utiBedsRepository.findByID(id)
-
-    if (UtiBedExist) {
-      throw new UtiBedAlreadyExistsError()
-    }
-
     const uti_bed = await this.utiBedsRepository.create({
-      id,
       type,
-      status: 'Livre',
+      status,
     })
 
     return {
