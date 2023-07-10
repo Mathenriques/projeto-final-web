@@ -1,11 +1,11 @@
-import { Prisma, Uti_Bed } from '@prisma/client'
+import { Prisma, UTI_Bed } from '@prisma/client'
 import { UtiBedsRepository } from '../utibeds-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryUtiBedsRepository implements UtiBedsRepository {
-  public items: Uti_Bed[] = []
+  public items: UTI_Bed[] = []
 
-  async findAll(): Promise<Uti_Bed[]> {
+  async findAll(): Promise<UTI_Bed[]> {
     const uti_beds = this.items
 
     return uti_beds
@@ -21,7 +21,7 @@ export class InMemoryUtiBedsRepository implements UtiBedsRepository {
     return uti_bed
   }
 
-  async create(data: Prisma.Uti_BedCreateInput) {
+  async create(data: Prisma.UTI_BedCreateInput) {
     const uti_bed = {
       id: randomUUID(),
       type: data.type,
