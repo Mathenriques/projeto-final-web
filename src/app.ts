@@ -4,10 +4,15 @@ import { AppJwtRoutes } from './http/routes/jwt-routes'
 import { ZodError } from 'zod'
 import { env } from './env'
 import fastifyJwt from '@fastify/jwt'
+import fastifyCors from '@fastify/cors'
 
 export const app = fastify()
 app.register(fastifyJwt, {
   secret: env.SECRET_JWT,
+})
+
+app.register(fastifyCors, {
+  origin: '*',
 })
 
 app.register(AppMainRoutes)

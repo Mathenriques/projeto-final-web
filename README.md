@@ -50,4 +50,5 @@ Esse projeto visa a criação de um sistema web para gerenciamento de leitos de 
 
 ## Como inicializar
 
-...
+### Passo 1 -- Inicialização
+
