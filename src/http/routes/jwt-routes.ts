@@ -14,9 +14,9 @@ export async function AppJwtRoutes(app: FastifyInstance) {
   // Get All Collaborators To Be Approval
   app.get('/collaborators-to-approve', GetAllCollaboratorsToApprove)
 
-  // Reprove Collaborator
-  app.delete('/reprove-collab', ReproveCollaborator)
+  // Approve Collaborator
+  app.put('/approve-collab', AproveCollaborator)
 
   // Reprove Collaborator
-  app.put('/approve-collab', AproveCollaborator)
+  app.delete('/reprove-collab', ReproveCollaborator)
 }

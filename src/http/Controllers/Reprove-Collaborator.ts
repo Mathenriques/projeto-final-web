@@ -1,4 +1,5 @@
-import { prisma } from '@/lib/prisma'
+import { CollaboratorDoesNotExists } from '@/services/Errors/collaborator-does-not-exists-error'
+import { makeCollaboratorReproveService } from '@/services/Factories/make-collaborator-reprove-service'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -7,21 +8,24 @@ export async function ReproveCollaborator(
   reply: FastifyReply,
 ) {
   const deleteCollaboratorBodySchema = z.object({
-    id: z.string(),
+    medical_register: z.string(),
   })
 
-  const { id } = deleteCollaboratorBodySchema.parse(request.body)
+  const { medical_register } = deleteCollaboratorBodySchema.parse(request.body)
 
-  const collab = await prisma.collaborator.delete({
-    where: {
-      id,
-    },
-    include: {
-      user: true,
-    },
-  })
+  try {
+    const reproveCollaborator = await makeCollaboratorReproveService()
 
-  return reply.status(200).send({
-    collaborators: collab,
-  })
+    const { bool } = await reproveCollaborator.execute({
+      medical_register,
+    })
+
+    return reply.status(200).send({
+      bool,
+    })
+  } catch (err) {
+    if (err instanceof CollaboratorDoesNotExists) {
+      return reply.status(400).send({ message: err.message })
+    }
+  }
 }
