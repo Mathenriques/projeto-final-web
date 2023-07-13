@@ -1,6 +1,8 @@
 import { InMemoryCollaboratorsRepository } from '@/repositories/in-memory/in-memory-collaborator-repository'
+import { CollaboratorDoesNotApprovedError } from '@/services/Errors/collaborator-does-not-approved-error'
 import { CollaboratorDoesNotExists } from '@/services/Errors/collaborator-does-not-exists-error'
 import { CrmCorenFormatInvalidError } from '@/services/Errors/crm-coren-format-invalid-error'
+import { CollaboratorApproveService } from '@/services/collaborator-approve'
 import { CollaboratorAuthenticateService } from '@/services/collaborator-authenticate'
 import { CollaboratorRegisterService } from '@/services/collaborator-register'
 import { randomUUID } from 'crypto'
@@ -8,6 +10,7 @@ import { expect, describe, it, beforeEach } from 'vitest'
 
 let inMemoryCollaboratorsRepository: InMemoryCollaboratorsRepository
 let sutRegister: CollaboratorRegisterService
+let sutApprove: CollaboratorApproveService
 let sut: CollaboratorAuthenticateService
 
 describe('Collaborator Register Service', () => {
@@ -16,6 +19,7 @@ describe('Collaborator Register Service', () => {
     sutRegister = new CollaboratorRegisterService(
       inMemoryCollaboratorsRepository,
     )
+    sutApprove = new CollaboratorApproveService(inMemoryCollaboratorsRepository)
     sut = new CollaboratorAuthenticateService(inMemoryCollaboratorsRepository)
   })
 
@@ -26,6 +30,10 @@ describe('Collaborator Register Service', () => {
       email: 'jhondoe@example.com',
       password: '123456',
       user_id: randomUUID(),
+    })
+
+    await sutApprove.execute({
+      medical_register: 'CRM/XX 123456',
     })
 
     const { collaborator } = await sut.execute({
@@ -56,6 +64,10 @@ describe('Collaborator Register Service', () => {
       user_id: randomUUID(),
     })
 
+    await sutApprove.execute({
+      medical_register: 'CRM/XX 123456',
+    })
+
     await expect(() =>
       sut.execute({
         medical_register: 'CRM/XX 123456',
@@ -81,5 +93,23 @@ describe('Collaborator Register Service', () => {
         role: 'MEDICO_GERAL',
       }),
     ).rejects.toBeInstanceOf(CrmCorenFormatInvalidError)
+  })
+
+  it('Should not be able to authenticate an collaborator not approved', async () => {
+    await sutRegister.execute({
+      medical_register: 'CRM/XX 123456',
+      role: 'MEDICO_GERAL',
+      email: 'jhondoe@example.com',
+      password: '123456',
+      user_id: randomUUID(),
+    })
+
+    await expect(() =>
+      sut.execute({
+        medical_register: 'CRM/XX 123456',
+        password: '123456',
+        role: 'MEDICO_GERAL',
+      }),
+    ).rejects.toBeInstanceOf(CollaboratorDoesNotApprovedError)
   })
 })
