@@ -6,11 +6,11 @@ export async function AproveCollaborator(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const deleteCollaboratorBodySchema = z.object({
+  const approveCollaboratorBodySchema = z.object({
     id: z.string(),
   })
 
-  const { id } = deleteCollaboratorBodySchema.parse(request.body)
+  const { id } = approveCollaboratorBodySchema.parse(request.body)
 
   const collab = await prisma.collaborator.update({
     data: {
