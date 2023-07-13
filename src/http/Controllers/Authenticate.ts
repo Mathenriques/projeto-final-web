@@ -1,3 +1,4 @@
+import { CollaboratorDoesNotApprovedError } from '@/services/Errors/collaborator-does-not-approved-error'
 import { CollaboratorDoesNotExists } from '@/services/Errors/collaborator-does-not-exists-error'
 import { CrmCorenFormatInvalidError } from '@/services/Errors/crm-coren-format-invalid-error'
 import { makeCollaboratorAuthenticateService } from '@/services/Factories/make-collaborator-authenticate-service'
@@ -43,7 +44,8 @@ export async function AuthenticateCollaborator(
   } catch (err) {
     if (
       err instanceof CollaboratorDoesNotExists ||
-      err instanceof CrmCorenFormatInvalidError
+      err instanceof CrmCorenFormatInvalidError ||
+      err instanceof CollaboratorDoesNotApprovedError
     ) {
       return reply.status(400).send({ message: err.message })
     }

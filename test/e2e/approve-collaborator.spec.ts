@@ -11,7 +11,7 @@ describe('Authenticate (e2e)', () => {
     await app.close()
   })
 
-  it('Should be able to authenticate', async () => {
+  it('Should be able to approve collaborator', async () => {
     await request(app.server).post('/register-collaborator').send({
       name: 'Jhon Doe',
       register: '12345678900',
@@ -21,20 +21,11 @@ describe('Authenticate (e2e)', () => {
       password: '12345678',
     })
 
-    await request(app.server).put('/approve-collab').send({
+    const response = await request(app.server).put('/approve-collab').send({
       medical_register: 'CRM/XX 123456',
-    })
-
-    const response = await request(app.server).post('/authenticate').send({
-      medical_register: 'CRM/XX 123456',
-      role: 'MEDICO_UTI',
-      password: '12345678',
     })
 
     console.log(response.body)
     expect(response.statusCode).toEqual(201)
-    expect(response.body).toEqual({
-      token: expect.any(String),
-    })
   })
 })

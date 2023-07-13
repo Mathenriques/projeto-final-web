@@ -54,7 +54,7 @@ model Collaborator {
 model Solicitation {
   id         String   @id @default(uuid())
   priority   Int
-  status     Boolean  @default(false)
+  status     StatusSolicitation
   created_at DateTime @default(now())
 
   collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
@@ -111,4 +111,11 @@ enum StatusUtiBed {
   Livre
   Limpeza
   Ocupado
+}
+
+enum StatusSolicitation {
+  Pendente
+  Approvado
+  Reprovado
+  Finalizado
 }

@@ -5,6 +5,38 @@ import { randomUUID } from 'crypto'
 export class InMemoryCollaboratorsRepository
   implements CollaboratorsRepository
 {
+  public items: Collaborator[] = []
+
+  async approveCollaborator(
+    medical_register: string,
+  ): Promise<Collaborator | null> {
+    const collab = this.items.find(
+      (item) => item.medical_register === medical_register,
+    )
+
+    if (!collab) {
+      return null
+    }
+
+    collab.approved = true
+
+    return collab
+  }
+
+  async deleteCollaborator(medical_register: string): Promise<Boolean> {
+    const index = this.items.findIndex(
+      (item) => item.medical_register === medical_register,
+    )
+
+    if (!index) {
+      return false
+    }
+
+    this.items.splice(index, 1)
+
+    return true
+  }
+
   async findById(id: string): Promise<Collaborator | null> {
     const collab = this.items.find((item) => item.id === id)
 
@@ -14,8 +46,6 @@ export class InMemoryCollaboratorsRepository
 
     return collab
   }
-
-  public items: Collaborator[] = []
 
   async findByEmail(email: string) {
     const collab = this.items.find((item) => item.email === email)

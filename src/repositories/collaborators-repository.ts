@@ -5,4 +5,6 @@ export interface CollaboratorsRepository {
   findByEmail(email: string): Promise<Collaborator | null>
   findByMedicalRegister(medical_register: string): Promise<Collaborator | null>
   findById(id: string): Promise<Collaborator | null>
+  approveCollaborator(medical_register: string): Promise<Collaborator | null>
+  deleteCollaborator(medical_register: string): Promise<Boolean>
 }

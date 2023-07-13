@@ -3,6 +3,35 @@ import { CollaboratorsRepository } from '../collaborators-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaCollaboratorsRepository implements CollaboratorsRepository {
+  async approveCollaborator(
+    medical_register: string,
+  ): Promise<Collaborator | null> {
+    const collab = prisma.collaborator.update({
+      where: {
+        medical_register,
+      },
+      data: {
+        approved: true,
+      },
+    })
+
+    return collab
+  }
+
+  async deleteCollaborator(medical_register: string): Promise<Boolean> {
+    const collab = prisma.collaborator.delete({
+      where: {
+        medical_register,
+      },
+    })
+
+    if (!collab) {
+      return false
+    }
+
+    return true
+  }
+
   async findById(id: string): Promise<Collaborator | null> {
     const collab = await prisma.collaborator.findUnique({
       where: { id },
@@ -26,28 +55,6 @@ export class PrismaCollaboratorsRepository implements CollaboratorsRepository {
 
     return collab
   }
-
-  async alterPassword(collabId: string, newPassword: string) {
-    const collab = await prisma.collaborator.update({
-      where: {
-        id: collabId, 
-      },
-      data: {
-        password_hash: newPassword,
-      },
-    })
-  }
-
-  async alterFunction (collabId: string, newRole: 'ENFERMEIRO') {
-    const collab = await prisma.collaborator.update({
-      where: {
-        id: collabId,
-      },
-      data: {
-        function: newRole,  // Pode assumir: 'ENFERMEIRO', 'MEDICO_UTI' e 'MEDICO_GERAL'
-      },
-    })
-  }  
 
   async create(
     data: Prisma.CollaboratorUncheckedCreateInput,

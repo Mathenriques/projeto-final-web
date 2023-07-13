@@ -4,6 +4,7 @@ import { CollaboratorDoesNotExists } from './Errors/collaborator-does-not-exists
 import { compare } from 'bcryptjs'
 import { validateCrmCorenFormat } from './utils/validate-crmCoren-format'
 import { CrmCorenFormatInvalidError } from './Errors/crm-coren-format-invalid-error'
+import { CollaboratorDoesNotApprovedError } from './Errors/collaborator-does-not-approved-error'
 
 interface CollaboratorAuthenticateRegisterRequest {
   medical_register: string
@@ -37,6 +38,10 @@ export class CollaboratorAuthenticateService {
 
     if (!collaborator) {
       throw new CollaboratorDoesNotExists()
+    }
+
+    if (!collaborator.approved) {
+      throw new CollaboratorDoesNotApprovedError()
     }
 
     const doesPasswordMatches = await compare(
