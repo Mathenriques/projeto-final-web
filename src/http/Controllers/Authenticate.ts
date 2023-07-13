@@ -27,7 +27,9 @@ export async function AuthenticateCollaborator(
     })
 
     const token = await reply.jwtSign(
-      {},
+      {
+        role: collaborator.function,
+      },
       {
         sign: {
           sub: collaborator.id,
