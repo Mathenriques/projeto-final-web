@@ -42,12 +42,13 @@ Esse projeto visa a criação de um sistema web para gerenciamento de leitos de 
 - [ ] Alterações referentes aos dados dos leitos, devem ser possível apenas para "Médico UTI"
 - [X] Leitos devem possuir apenas 3 status: 1 - Livre; 2 - Ocupado; 3 - Preparação
 - [ ] Solicitações de leitos possuêm o prazo de 48 horas
+
 - [ ] Alterações de Cargo apenas para usuário admin
 
 ### Requisitos Não Funcionais
 - [X] A senha do usuário precisa estar criptografada
 - [X] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL
-- [ ] Todas listas de dados precisam estar paginadas com 30 itens por página
+- [X] Todas listas de dados precisam estar paginadas com 30 itens por página
 
 ## Como inicializar
 

@@ -23,6 +23,9 @@ export class PrismaCollaboratorsRepository implements CollaboratorsRepository {
       where: {
         medical_register,
       },
+      include: {
+        user: true,
+      },
     })
 
     if (!collab) {
