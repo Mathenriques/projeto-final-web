@@ -1,11 +1,12 @@
-import { Solicitation } from '@prisma/client'
+import { Solicitation, StatusSolicitation } from '@prisma/client'
 import { SolicitationsRepository } from '@/repositories/solicitations-repository'
 import { CollaboratorsRepository } from '@/repositories/collaborators-repository'
 import { CollaboratorDoesNotExists } from './Errors/collaborator-does-not-exists-error'
 
 interface SolicitationRegisterServiceRequest {
-  priority: number
   collaborator_id: string
+  priority: number
+  status: StatusSolicitation
 }
 
 interface SolicitationRegisterServiceResponse {
@@ -19,8 +20,9 @@ export class SolicitationRegisterService {
   ) {}
 
   async execute({
-    priority,
     collaborator_id,
+    priority,
+    status,
   }: SolicitationRegisterServiceRequest): Promise<SolicitationRegisterServiceResponse> {
     const collaboratorExists = await this.collaboratorRepository.findById(
       collaborator_id,
@@ -32,6 +34,7 @@ export class SolicitationRegisterService {
 
     const solicitation = await this.solcitationsRepository.create({
       priority,
+      status,
       collaborator_id,
     })
 

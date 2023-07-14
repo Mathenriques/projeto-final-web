@@ -59,7 +59,9 @@ model Solicitation {
 
   collaborator    Collaborator @relation(fields: [collaborator_id], references: [id])
   collaborator_id String
+  
 
+  uti_bed UtiBedsOnSolicitations[]
   patient_infos Patient_Infos?
 
   @@map("solicitations")
@@ -86,9 +88,20 @@ model Uti_Bed {
   type String
   status StatusUtiBed
 
+  solicitation UtiBedsOnSolicitations[]
+
   @@map("uti_beds")
 }
 
+model UtiBedsOnSolicitations {
+  uti_bed Uti_Bed @relation(fields: [uti_bed_id], references: [id])
+  uti_bed_id String
+  solicitation Solicitation @relation(fields: [solicitation_id], references: [id])
+  solicitation_id String
+
+  @@map("uti_bed_solicitation")
+  @@id([uti_bed_id, solicitation_id])
+}
 enum Role {
   MEDICO_UTI
   MEDICO_GERAL
