@@ -1,17 +1,18 @@
-import { Prisma, Solicitation } from '@prisma/client'
+import { Prisma, Solicitation, StatusSolicitation } from '@prisma/client'
 import { SolicitationsRepository } from '../solicitations-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaSolicitationsRepository implements SolicitationsRepository {
   async approveSolicitation(
     solicitation_id: string,
+    status: StatusSolicitation,
   ): Promise<Solicitation | null> {
     const solicitation = await prisma.solicitation.update({
       where: {
         id: solicitation_id,
       },
       data: {
-        status: 'Approvado',
+        status,
       },
     })
 
@@ -54,7 +55,7 @@ export class PrismaSolicitationsRepository implements SolicitationsRepository {
   async getApprovedSolicitations(id_bed: string): Promise<Solicitation | null> {
     const solicitation = await prisma.solicitation.findFirst({
       where: {
-        status: 'Approvado',
+        status: 'Aprovado',
         uti_bed: {
           some: {
             uti_bed_id: id_bed,

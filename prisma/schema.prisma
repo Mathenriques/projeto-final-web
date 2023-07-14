@@ -128,7 +128,7 @@ enum StatusUtiBed {
 
 enum StatusSolicitation {
   Pendente
-  Approvado
+  Aprovado
   Reprovado
   Finalizado
 }

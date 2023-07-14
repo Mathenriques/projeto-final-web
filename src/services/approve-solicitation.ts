@@ -1,8 +1,9 @@
-import { Solicitation } from '@prisma/client'
+import { Solicitation, StatusSolicitation } from '@prisma/client'
 import { SolicitationsRepository } from '@/repositories/solicitations-repository'
 
 interface ApproveSolicitationServiceRequest {
   solicitation_id: string
+  status: StatusSolicitation
 }
 
 interface ApproveSolicitationServiceResponse {
@@ -14,9 +15,11 @@ export class ApproveSolicitationService {
 
   async execute({
     solicitation_id,
+    status,
   }: ApproveSolicitationServiceRequest): Promise<ApproveSolicitationServiceResponse> {
     const solicitation = await this.solcitationsRepository.approveSolicitation(
       solicitation_id,
+      status,
     )
 
     return {
