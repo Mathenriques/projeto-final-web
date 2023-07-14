@@ -17,9 +17,10 @@ Esse projeto visa a criação de um sistema web para gerenciamento de leitos de 
 - [X] Deve ser possível cadastrar um colaborador
 - [X] Deve ser possível cadastrar um paciente
 - [X] Deve ser possível se autenticar
-- [ ] Deve ser possível visualizar a lista de leitos (mapa)
-- [ ] Deve ser possível verificar as solicitações de cadastro
-- [ ] Deve ser possível requisitar um leito
+- [X] Deve ser possível verificar as solicitações de cadastro
+- [X] Deve ser possível requisitar um leito
+- [X] Deve ser possível visualizar a lista de leitos (mapa)
+- [ ] Deve ser possível visualizar as requisições de leitos
 - [ ] Deve ser possível aprovar uma requisição de leito
 - [ ] Deve ser possível visualizar dados de um leito
 - [ ] Deve ser possível alterar dados de um leito

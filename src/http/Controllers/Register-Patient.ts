@@ -15,7 +15,7 @@ export async function RegisterPatient(
   const registerPatientBodySchema = z.object({
     name: z.string(),
     register: z.string(),
-    birth_date: z.date(),
+    birth_date: z.string(),
     gender: z.enum(['Masculino', 'Feminino']),
     main_deseases: z.string().array(),
     precaution: z.enum([

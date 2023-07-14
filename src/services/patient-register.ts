@@ -3,7 +3,7 @@ import { Gender, Patient } from '@prisma/client'
 import { UserAlreadyExistsError } from './Errors/user-already-exists-error'
 
 interface PatientRegisterServiceRequest {
-  birth_date: Date
+  birth_date: string
   gender: Gender
   user_id: string
 }
