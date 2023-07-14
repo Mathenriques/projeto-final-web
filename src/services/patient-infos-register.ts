@@ -6,10 +6,10 @@ import { SolicitationsRepository } from '@/repositories/solicitations-repository
 import { SolicitationDoesNotExists } from './Errors/solicitation-does-not-exists-error'
 
 interface PatientInfosRegisterServiceRequest {
-  main_deseases: string[]
+  main_deseases: string
   precaution: Precaution
-  antecedents_comorbidities: string[]
-  suport_needed: string[]
+  antecedents_comorbidities: string
+  suport_needed: string
   patient_id: string
   solicitation_id: string
 }

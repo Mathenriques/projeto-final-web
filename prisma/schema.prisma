@@ -69,10 +69,10 @@ model Solicitation {
 
 model Patient_Infos {
   id                        String     @id @default(uuid())
-  main_deseases             String[]
+  main_deseases             String
   precaution                Precaution
-  antecedents_comorbidities String[]
-  suport_needed             String[]
+  antecedents_comorbidities String
+  suport_needed             String
 
   patient Patient @relation(fields: [patient_id], references: [id])
   patient_id String
