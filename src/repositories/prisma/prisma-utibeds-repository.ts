@@ -9,6 +9,12 @@ export class PrismaUTIBedsRepository implements UtiBedsRepository {
     return uti_beds
   }
 
+  async countUtiBeds(): Promise<Number> {
+    const numberUtis = await prisma.uti_Bed.count()
+
+    return numberUtis
+  }
+
   async findByID(id: string): Promise<Uti_Bed | null> {
     const uti_bed = await prisma.uti_Bed.findUnique({
       where: {

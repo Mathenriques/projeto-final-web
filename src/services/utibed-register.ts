@@ -1,29 +1,20 @@
 import { UtiBedsRepository } from '@/repositories/utibeds-repository'
-import { StatusUtiBed, Uti_Bed } from '@prisma/client'
-
-interface UtiBedRegisterServiceRequest {
-  type: string
-  status: StatusUtiBed
-}
-
-interface UtiBedRegisterServiceResponse {
-  uti_bed: Uti_Bed
-}
 
 export class UtiBedRegisterService {
   constructor(private utiBedsRepository: UtiBedsRepository) {}
 
-  async execute({
-    type,
-    status,
-  }: UtiBedRegisterServiceRequest): Promise<UtiBedRegisterServiceResponse> {
-    const uti_bed = await this.utiBedsRepository.create({
-      type,
-      status,
-    })
+  async execute() {
+    const numberUtisBeds = await this.utiBedsRepository.countUtiBeds()
 
-    return {
-      uti_bed,
+    if (numberUtisBeds !== 30) {
+      const numberloop = 30 - numberUtisBeds
+
+      for (let i = 0; i < numberloop; i++) {
+        await this.utiBedsRepository.create({
+          type: 'UTI',
+          status: 'Livre',
+        })
+      }
     }
   }
 }
