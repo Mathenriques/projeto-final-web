@@ -2,58 +2,65 @@
 Projeto final da disciplina COM222 - Desenvolvimento de Sistemas Web da Universidade Federal de Itajubá.
 
 Esse projeto visa a criação de um sistema web para gerenciamento de leitos de UTI.
-
-## Desenvoledores
-[Matheus Robusti Henriques Marqui](https://github.com/Mathenriques)
-
-[Camila]()
-
-[Isaac]()
-
-[Marcelo]()
-
-## Requisitos & Regras de Negócios
-### Requisitos Funcionais
-- [X] Deve ser possível cadastrar um colaborador
-- [X] Deve ser possível cadastrar um paciente
-- [X] Deve ser possível se autenticar
-- [X] Deve ser possível verificar as solicitações de cadastro
-- [X] Deve ser possível requisitar um leito
-- [X] Deve ser possível visualizar a lista de leitos (mapa)
-- [X] Deve ser possível visualizar as requisições de leitos
-- [X] Deve ser possível aprovar uma requisição de leito
-
-- [ ] Deve ser possível visualizar dados de um leito
-- [ ] Deve ser possível alterar dados de um leito
-
-- [ ] Deve ser possível listar todos os usuários do sistema
-- [ ] Deve ser possível alterar cargo do médico ( Geral <=> UTI )
-- [ ] Deve ser possível visualizar os dados do usuário
-- [ ] Deve ser possível alterar a senha
-
-### Regras de Negócios
-- [X] O usuário não deve poder se cadastrar com um e-mail e/ou CRM/COREN duplicado;
-- [X] COREM => seis números + a categoria + a sigla COREN acompanhada do estado, exemplo: CRM-SP-000.000-XXX
-- [X] CRM =>  seis números + a sigla CRM acompanhada do estado, exemplo: CRM/SP 123456
-- [X] O usuário deve cadastrar uma senha com mais de 8 digitos
-- [X] O usuário colaborador só poderá se autenticar caso ele seja aceito o pelo admin
-- [X] Os usuários colaboradores não aceitos devem ser excluidos do Banco de Dados e os aceitos devem receber true no atributo 'approved'
-- [X] Não deve ser possível alocar pacientes a leitos já ocupados
-- [X] Leitos devem possuir apenas 3 status: 1 - Livre; 2 - Ocupado; 3 - Preparação
-
-- [ ] Apenas "Medicos UTI" poderão aceitar solicitações e designar leitos
-- [ ] Alterações referentes aos dados dos leitos, devem ser possível apenas para "Médico UTI"
-
-- [ ] Solicitações de leitos possuêm o prazo de 48 horas
-- [ ] Enfermeiros apenas poderão visualizar os dados
-- [ ] Alterações de Cargo apenas para usuário admin
-
-### Requisitos Não Funcionais
-- [X] A senha do usuário precisa estar criptografada
-- [X] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL
-- [X] Todas listas de dados precisam estar paginadas com 30 itens por página
-
 ## Como inicializar
 
-### Passo 1 -- Inicialização
+Para inicializar o projeto, é necessário seguir os passos abaixo:
 
+### Passo 1: Instalação Docker
+
+Instale o Docker em sua maquina, para isso recomendo olhar a documentação:
+
+[Documentação Docker](https://docs.docker.com/get-docker/)
+
+### Passo 2: Clonar o projeto
+
+Clone o projeto em sua máquina
+
+### Passo 3: Arquivos bases
+
+#### Passo 3.1: Arquivo .env
+
+Dentro da pasta raiz do projeto, encontra-se um arquivo chamado `.env.example`, renomeie esse arquivo para `.env`
+
+#### Passo 3.2: Bibliotecas 
+
+Abra o terminal na pasta raiz do projeto, e digite: `npm install`
+
+### Passo 4: Banco de dados
+
+1. Antes é necessário subir o container do docker, para isso abra o terminal na pasta raiz do projeto e digite: `docker-compose up`
+
+**Obs: NÃO FECHE ESSE TERMINAL, CASO ENCERRE TAMBÉM ENCERRARÁ O CONTAINER**
+
+2. Para criar o banco de dados, digite em um novo terminal: `npx prisma migrate dev`
+
+A partir desse momento seu banco de dados já foi criado
+
+### Passo 5: Rodar a Aplicação
+
+Para rodar a aplicação e subir o servidor, rode no terminal: `npm run start:dev`
+
+### Passo 6: Rotas importantes
+
+Antes de começar a usar a aplicação é necessária que execute as rotas abaixo:
+
+Podem ser executadas no navegador, mas dê preferencia para sistemas como: Postman e Insomnia
+
+```shell
+
+\\ Rota para criar admin master:
+Método: 'POST'
+URL: 'http://localhost:3333/register-admin'
+Status-Code-Retorno: 201
+
+\\ Rota para criar leitos de UTI:
+Método: 'POST'
+URL: 'http://localhost:3333/register-uti-bed'
+Status-Code-Retorno: 201
+
+```
+
+As rotas acima só podem ser executadas uma vez, as demais vezes ela informará erro.
+
+
+### Pronto! Agora sua aplicação está pronta para se conectar com o Front-end
