@@ -1,4 +1,4 @@
-import { Patient_Infos, Prisma, Solicitation } from '@prisma/client'
+import { Prisma, Solicitation } from '@prisma/client'
 import { SolicitationsRepository } from '../solicitations-repository'
 import { prisma } from '@/lib/prisma'
 
@@ -13,20 +13,19 @@ export class PrismaSolicitationsRepository implements SolicitationsRepository {
     return solicitation
   }
 
-  async createUtiBedRequisition(patientInfos: Patient_Infos, collabId: string) {
-    const solicitation = await prisma.solicitation.create({
-      data: { // ERRO -> ao inserir os dados da tabela patient_infos, provavelmente na tipagem
-        patient_infos: patientInfos,
-        collaborator_id: collabId,
+  async getApprovedSolicitations(id_bed: string): Promise<Solicitation | null> {
+    const solicitation = await prisma.solicitation.findFirst({
+      where: {
+        status: 'Approvado',
+        uti_bed: {
+          some: {
+            uti_bed_id: id_bed,
+          },
+        },
       },
     })
-  }
 
-  async validateUtiBedsSolicitation (solicitationId: string) {
-    const solicitation = await prisma.solicitation.update({
-      where: { id: solicitationId },
-      data: { status: true },
-    })
+    return solicitation
   }
 
   async create(

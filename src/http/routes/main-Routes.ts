@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { RegisterCollaborator } from '../Controllers/Register'
+import { RegisterCollaborator } from '../Controllers/Register-Collaborator'
 import { AuthenticateCollaborator } from '../Controllers/Authenticate'
 import { RegisterUtiBed } from '../Controllers/Register-UtiBed'
 

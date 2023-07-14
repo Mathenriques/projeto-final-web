@@ -4,6 +4,7 @@ import { UtiBeds } from '../Controllers/Uti-Beds'
 import { GetAllCollaboratorsToApprove } from '../Controllers/Collaborators-to-Approve'
 import { ReproveCollaborator } from '../Controllers/Reprove-Collaborator'
 import { AproveCollaborator } from '../Controllers/Aprove-Collaborator'
+import { RegisterPatient } from '../Controllers/Register-Patient'
 
 export async function AppJwtRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
@@ -19,4 +20,7 @@ export async function AppJwtRoutes(app: FastifyInstance) {
 
   // Reprove Collaborator
   app.delete('/reprove-collab', ReproveCollaborator)
+
+  // Register Patient
+  app.post('/register-patient', RegisterPatient)
 }
