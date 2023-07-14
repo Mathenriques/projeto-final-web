@@ -1,3 +1,4 @@
+import { prisma } from '@/lib/prisma'
 import { CollaboratorDoesNotExists } from '@/services/Errors/collaborator-does-not-exists-error'
 import { SolicitationDoesNotExists } from '@/services/Errors/solicitation-does-not-exists-error'
 import { UserAlreadyExistsError } from '@/services/Errors/user-already-exists-error'
@@ -28,6 +29,7 @@ export async function RegisterPatient(
     suport_needed: z.string().array(),
     priority: z.number(),
     collaborator_id: z.string(),
+    uti_bed_id: z.string(),
   })
 
   const {
@@ -41,6 +43,7 @@ export async function RegisterPatient(
     priority,
     suport_needed,
     collaborator_id,
+    uti_bed_id,
   } = registerPatientBodySchema.parse(request.body)
 
   try {
@@ -65,6 +68,13 @@ export async function RegisterPatient(
       collaborator_id,
       priority,
       status: 'Pendente',
+    })
+
+    await prisma.utiBedsOnSolicitations.create({
+      data: {
+        solicitation_id: solicitation.id,
+        uti_bed_id,
+      },
     })
 
     const registerPatientInfo = makePatientInfosRegisterService()

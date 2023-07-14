@@ -3,6 +3,29 @@ import { SolicitationsRepository } from '../solicitations-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaSolicitationsRepository implements SolicitationsRepository {
+  async findAllToApprove(): Promise<Solicitation[] | null> {
+    const solicitations = await prisma.solicitation.findMany({
+      include: {
+        patient_infos: true,
+        uti_bed: true,
+        collaborator: {
+          select: {
+            user: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        status: 'Pendente',
+      },
+    })
+
+    return solicitations
+  }
+
   async findById(id: string): Promise<Solicitation | null> {
     const solicitation = await prisma.solicitation.findUnique({
       where: {
