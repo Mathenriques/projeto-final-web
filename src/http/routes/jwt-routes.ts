@@ -6,6 +6,7 @@ import { ReproveCollaborator } from '../Controllers/Reprove-Collaborator'
 import { AproveCollaborator } from '../Controllers/Aprove-Collaborator'
 import { RegisterPatient } from '../Controllers/Register-Patient'
 import { SolicitationsToApprove } from '../Controllers/Solicitations-To-Approve'
+import { ApproveSolicitation } from '../Controllers/Approve-Solicitation'
 
 export async function AppJwtRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
@@ -25,6 +26,9 @@ export async function AppJwtRoutes(app: FastifyInstance) {
   // Register Patient
   app.post('/register-patient', RegisterPatient)
 
-  // Register Patient
+  // Solicitations to Approve
   app.get('/solicitation-to-approve', SolicitationsToApprove)
+
+  // Approve Solicitation
+  app.put('/approve-solicitation', ApproveSolicitation)
 }

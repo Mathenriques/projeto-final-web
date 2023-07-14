@@ -3,6 +3,21 @@ import { SolicitationsRepository } from '../solicitations-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaSolicitationsRepository implements SolicitationsRepository {
+  async approveSolicitation(
+    solicitation_id: string,
+  ): Promise<Solicitation | null> {
+    const solicitation = await prisma.solicitation.update({
+      where: {
+        id: solicitation_id,
+      },
+      data: {
+        status: 'Approvado',
+      },
+    })
+
+    return solicitation
+  }
+
   async findAllToApprove(): Promise<Solicitation[] | null> {
     const solicitations = await prisma.solicitation.findMany({
       include: {

@@ -20,7 +20,7 @@ Esse projeto visa a criação de um sistema web para gerenciamento de leitos de 
 - [X] Deve ser possível verificar as solicitações de cadastro
 - [X] Deve ser possível requisitar um leito
 - [X] Deve ser possível visualizar a lista de leitos (mapa)
-- [ ] Deve ser possível visualizar as requisições de leitos
+- [X] Deve ser possível visualizar as requisições de leitos
 - [ ] Deve ser possível aprovar uma requisição de leito
 - [ ] Deve ser possível visualizar dados de um leito
 - [ ] Deve ser possível alterar dados de um leito
@@ -37,13 +37,13 @@ Esse projeto visa a criação de um sistema web para gerenciamento de leitos de 
 - [X] O usuário deve cadastrar uma senha com mais de 8 digitos
 - [X] O usuário colaborador só poderá se autenticar caso ele seja aceito o pelo admin
 - [X] Os usuários colaboradores não aceitos devem ser excluidos do Banco de Dados e os aceitos devem receber true no atributo 'approved'
-- [ ] Enfermeiros apenas poderão visualizar os dados
-- [ ] Apenas "Medicos Intensivistas" poderão aceitar solicitações e designar leitos
-- [ ] Não deve ser possível alocar pacientes a leitos já ocupados
+- [ ] Apenas "Medicos UTI" poderão aceitar solicitações e designar leitos
+- [X] Não deve ser possível alocar pacientes a leitos já ocupados
 - [ ] Alterações referentes aos dados dos leitos, devem ser possível apenas para "Médico UTI"
 - [X] Leitos devem possuir apenas 3 status: 1 - Livre; 2 - Ocupado; 3 - Preparação
-- [ ] Solicitações de leitos possuêm o prazo de 48 horas
 
+- [ ] Solicitações de leitos possuêm o prazo de 48 horas
+- [ ] Enfermeiros apenas poderão visualizar os dados
 - [ ] Alterações de Cargo apenas para usuário admin
 
 ### Requisitos Não Funcionais

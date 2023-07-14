@@ -5,5 +5,5 @@ export interface SolicitationsRepository {
   findById(id: string): Promise<Solicitation | null>
   getApprovedSolicitations(id_bed: string): Promise<Solicitation | null>
   findAllToApprove(): Promise<Solicitation[] | null>
-  getApprovedSolicitations(id_bed: string): Promise<Solicitation | null>
+  approveSolicitation(solicitation_id: string): Promise<Solicitation | null>
 }
