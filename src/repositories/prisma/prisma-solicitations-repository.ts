@@ -22,7 +22,19 @@ export class PrismaSolicitationsRepository implements SolicitationsRepository {
   async findAllToApprove(): Promise<Solicitation[] | null> {
     const solicitations = await prisma.solicitation.findMany({
       include: {
-        patient_infos: true,
+        patient_infos: {
+          include: {
+            patient: {
+              include: {
+                user: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
         uti_bed: true,
         collaborator: {
           select: {

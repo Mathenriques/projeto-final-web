@@ -1,13 +1,5 @@
-import { Patient_Infos, Precaution } from '@prisma/client'
+import { Patient_Infos, Prisma } from '@prisma/client'
 
-export interface CreateInfoPatientsParams {
-  main_deseases: string
-  precaution: Precaution
-  antecedents_comorbidities: string
-  suport_needed: string
-  patient_id: string
-  solicitation_id: string
-}
 export interface PatientInfosRepository {
-  create(data: CreateInfoPatientsParams): Promise<Patient_Infos>
+  create(data: Prisma.Patient_InfosUncheckedCreateInput): Promise<Patient_Infos>
 }

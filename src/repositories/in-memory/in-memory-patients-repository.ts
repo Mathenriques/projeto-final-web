@@ -18,7 +18,7 @@ export class InMemoryPatientsRepository implements PatientsRepository {
   async create(data: Prisma.PatientUncheckedCreateInput) {
     const patient = {
       id: randomUUID(),
-      birth_date: new Date(data.birth_date),
+      birth_date: new Date(data.birth_date).toString(),
       gender: data.gender,
       user_id: data.user_id,
     }
